@@ -3,32 +3,20 @@ import pandas as pd
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import os
+from datetime import date
 
 # Title and Description
 st.title("Regional Commodity Prices")
 st.markdown("Enter the details of the commodity below or upload an Excel file.")
 
-# Upload your Excel file
-st.markdown("### Upload Your Excel File")
-uploaded_file = st.file_uploader("Choose an Excel file", type=["xlsx", "xls"])
 
-# Fetch and Display Data
-if uploaded_file is not None:
-    try:
-        # Reading the uploaded Excel file
-        df = pd.read_excel(uploaded_file)
-        df = df.dropna(how="all")  # Remove empty rows
-        st.markdown("### Existing Data")
-        st.dataframe(df)  # Display the content of the Excel file
-    except Exception as e:
-        st.error(f"An error occurred while reading the file: {e}")
-else:
-    st.info("Please upload an Excel file to proceed.")
+
 
 # Add input fields for manual data entry
 st.markdown("### Add New Commodity Details")
 personnel_id = st.text_input(label="Personnel_ID")
-input_date = st.date_input(label="Input Date (DD-MM-YYYY)")
+today_date = date.today()
+input_date = st.date_input(label="Input Date (DD-MM-YYYY)", value=today_date)
 week = st.text_input(label="Week (week of the year)")
 town = st.text_input(label="Town")
 region = st.text_input(label="Region")
